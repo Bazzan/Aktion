@@ -69,7 +69,7 @@ public class Registration extends JFrame{
 		down.add(blackMondayButton);
 		blackMondayButton.addActionListener(new BlackMondayLis());
 		
-		
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(600,500);
 		setVisible(true);
 		
@@ -195,82 +195,82 @@ public class Registration extends JFrame{
 
 			if (bSelec == "Jewelry") {
 				jewelryCreation();
+				System.out.println("Jewelry created");
 			} else if (bSelec == "Stock") {
 				stockCreation();
-				System.out.println("sisisi is isisi sisi is is i");
+				System.out.println("Stock Created");
 
 			} else if (bSelec == "Electronics"){
 				electronicsCreation();
-				System.out.println("nononon onon on onon on");
+				System.out.println("Electronics created");
 			}
 			
 
 		}
-		
 		
 		public void electronicsCreation() {
-			FormularElectronics fe = new FormularElectronics();
-			int answer = JOptionPane.showConfirmDialog(Registration.this, fe , "New", JOptionPane.OK_CANCEL_OPTION);
-			
-			if (answer != JOptionPane.OK_OPTION) {
-				return;
-			}
-			String name = fe.getName();
-			int price = fe.getPrice();
-			double damage = fe.getDamege();
-			
-			Electronics eReg = new Electronics(name, price, damage);
-			allObject.add(eReg);
-			System.out.println("eReg");
-		}
-		
-
-		public void jewelryCreation() {
-			FormularJewlery fj = new FormularJewlery();
-			int answer = JOptionPane.showConfirmDialog(Registration.this, fj, "New", JOptionPane.OK_CANCEL_OPTION);
-
-			if (answer != JOptionPane.OK_OPTION) {
-				return;
-			}
-			String name = fj.getName();
-			int jewls = fj.getJewls();
-			boolean goldBox = fj.getGold();
-
-			Jewelry jReg = new Jewelry(name, jewls, goldBox);
-			allObject.add(jReg);
-			System.out.println("jREG");
-		}
-		
-		public void stockCreation() {
 			try {
-			FormularStock fs = new FormularStock();
-			int answer = JOptionPane.showConfirmDialog(Registration.this, fs , "New", JOptionPane.OK_CANCEL_OPTION);
-			
-			if (answer != JOptionPane.OK_OPTION) {
-				return;
-			}
-			String name = fs.getName();
-			int price = fs.getPrice();
-			int amount = fs.getAmount();
-			
-			Stock sReg = new Stock(name, price, amount);
-			allObject.add(sReg);
-			System.out.println("sReg");
-			}catch (NumberFormatException e) {
+				FormularElectronics fe = new FormularElectronics();
+				int answer = JOptionPane.showConfirmDialog(Registration.this, fe, "New", JOptionPane.OK_CANCEL_OPTION);
+
+				if (answer != JOptionPane.OK_OPTION) {
+					return;
+				}
+				String name = fe.getName();
+				int price = fe.getPrice();
+				double damage = fe.getDamege();
+
+				Electronics eReg = new Electronics(name, price, damage);
+				allObject.add(eReg);
+				System.out.println("eReg");
+			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(Registration.this, "Wrong inputdata");
 			}
 		}
-			
+
+		public void jewelryCreation() {
+			try {
+				FormularJewlery fj = new FormularJewlery();
+				int answer = JOptionPane.showConfirmDialog(Registration.this, fj, "New", JOptionPane.OK_CANCEL_OPTION);
+
+				if (answer != JOptionPane.OK_OPTION) {
+					return;
+				}
+				String name = fj.getName();
+				int jewls = fj.getJewls();
+				boolean goldBox = fj.getGold();
+
+				Jewelry jReg = new Jewelry(name, jewls, goldBox);
+				allObject.add(jReg);
+				System.out.println("jREG");
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(Registration.this, "Wrong inputdata");
+			}
+
+		}
+
+		public void stockCreation() {
+			try {
+				FormularStock fs = new FormularStock();
+				int answer = JOptionPane.showConfirmDialog(Registration.this, fs, "New", JOptionPane.OK_CANCEL_OPTION);
+
+				if (answer != JOptionPane.OK_OPTION) {
+					return;
+				}
+				String name = fs.getName();
+				int price = fs.getPrice();
+				int amount = fs.getAmount();
+
+				Stock sReg = new Stock(name, price, amount);
+				allObject.add(sReg);
+				System.out.println("sReg");
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(Registration.this, "Wrong inputdata");
+			}
+		}
 
 	}
 		
-//		public String getBSelec() {
-//			
-//			return bSelec;
-//		}
-
-
-	
 	
 //	class NewLis implements ActionListener{
 //		public void actionPerformed(ActionEvent ave) {
@@ -302,8 +302,8 @@ public class Registration extends JFrame{
 		
 		public void actionPerformed(ActionEvent ave) {
 			display.setText("");
-
-
+//			Collection.sort(allObject, Comparator.comparing((Object) -> Object().getName));
+			
 			for (Object obj : allObject) {
 				display.append(obj.toString() + "\n" );
 			}
@@ -320,7 +320,7 @@ public class Registration extends JFrame{
 				}
 
 			}
-			
+			System.out.println("Black Monday bby!");
 
 		}
 

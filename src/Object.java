@@ -1,4 +1,4 @@
-
+import java.util.Comparator;
 
 // fixa guld boolen
 
@@ -19,6 +19,9 @@ abstract class Object {
 	
 	abstract public String toString();
 	
+//	public static Comparator<Object> nameComp = new Comparator<Object>() {
+//		
+//	}
 		
 }
 
@@ -114,18 +117,13 @@ class Electronics extends Object {
 		return damage;
 	}
 	
-//	private double calcValue() {
-//		double value;
-//
-//		return value;
-//	}
 	
 	@Override
 	public int getValue() {
 		double value;
 		double damageCalc = damage / 10;
 		System.out.println(damage+ "damage");
-		value = (int) (initialPrice * damage);
+		value = (initialPrice * damageCalc);
 		System.out.println(value + "price");
 		return (int) (value * 1.25);
 		
