@@ -16,6 +16,9 @@ abstract class Object {
 	}
 	
 	abstract public int getValue();
+	
+	abstract public String toString();
+	
 		
 }
 
@@ -37,40 +40,55 @@ class Jewelry extends Object{
 		return jewls;
 	}
 	
-	public String toString() {
-		String str = getName() + " value: " + getValue() + " jewels: " + getJewls();
-		if (gold) {
-			str += " gold.";
-		}else {
-			str += " silver.";
-		}
-		return str;
-	}
-	
 	@Override
 	public int getValue() {
 		return gold ? getJewls() * 500 + 2000 : getJewls() * 500 + 700;  
 	}
-	
+	@Override
+	public String toString() {
+		String str = getName() + " Value: " + getValue() + ", Jewels: " + getJewls();
+		if (gold) {
+			str += ", Gold.";
+		}else {
+			str += ", Silver.";
+		}
+		return str;
+	}
 }
 
 class Stock extends Object{
-	private int value;
+	private int pEA; //priceEach
 	private int amount;
 	
-	public Stock (String name, int value, int amount) {
+	public Stock (String name, int pEA, int amount) {
 		super (name);
-		this.value = value;
+		this.pEA = pEA;
 		this.amount = amount;
+	}
+	
+	public int getPrice() {
+		return pEA;
+	}
+	public int getAmount() {
+		return amount;
+	}
+	
+	public void blackMonday () {
+		pEA = 0;
 	}
 	
 	@Override
 	public int getValue() {
-		return value * amount;
+		return pEA * amount;
 	}
 	
-	public void blackMonday(int value) {
-		value = 0;
+//	public void blackMonday(int value) {
+//		value = 0;
+//	}
+	@Override
+	public String toString() {
+		String str = getName() + ":" + " Total value: " + getValue() + ", Price " + getPrice() + ", Amount: " + getAmount() ;
+		return str;
 	}
 	
 }
@@ -78,26 +96,44 @@ class Stock extends Object{
 class Electronics extends Object {
 	
 	private int initialPrice;
-	private int damage;
-	private double value;
-	private double price;
+	private double damage;
 	
-	public Electronics (String name,int iP, int damage) {
+	public Electronics (String name,int initialPrice, double damage) {
 		super(name);
-		this.initialPrice = iP;
+		this.initialPrice = initialPrice;
 		this.damage = damage;
 	}
 	
-	public double calcValue() {
-		
-		price = initialPrice * damage/10;
-		value = (price * 1.25);
-		return value;
+
+	
+	public int getInitialPrice() {
+		return initialPrice;
 	}
+	
+	public double getDamage() {
+		return damage;
+	}
+	
+//	private double calcValue() {
+//		double value;
+//
+//		return value;
+//	}
 	
 	@Override
 	public int getValue() {
-		return (int)calcValue();
+		double value;
+		double damageCalc = damage / 10;
+		System.out.println(damage+ "damage");
+		value = (int) (initialPrice * damage);
+		System.out.println(value + "price");
+		return (int) (value * 1.25);
+		
+	}
+	@Override
+	public String toString() {
+		String estr = getName() + ": Value " + getValue()  + ", Initial price: " + getInitialPrice() + ", Damage: " + (int) getDamage();
+		return estr;
 	}
 	
 }
