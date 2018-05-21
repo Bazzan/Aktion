@@ -6,22 +6,13 @@ import java.util.List;
 
 public class Registration extends JFrame {
 
-	ArrayList<Object> allObject = new ArrayList<>();
+	ArrayList<AuctionObject> allObjects = new ArrayList<>();
 	JTextArea display;
 	String[] boxString = { "Jewelry", "Stock", "Electronics" };
 	JComboBox<String> cBox = new JComboBox<>(boxString);
 	JRadioButton valueButton;
 	JRadioButton nameButton;
 
-	public void addDingdong() {
-		allObject.add(new Electronics("Ipad", 10000, 10));
-		allObject.add(new Electronics("Rabbit", 900, 4));
-		allObject.add(new Stock("Wiggy", 55, 100));
-		allObject.add(new Stock("Dangy", 9, 1000));
-
-		allObject.add(new Jewelry("Doris", 21, true));
-		allObject.add(new Jewelry("Ris", 121, false));
-	}
 
 	public Registration() {
 		super("Registration");
@@ -34,7 +25,8 @@ public class Registration extends JFrame {
 		JPanel right = new JPanel();
 		right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
 		add(right, BorderLayout.EAST);
-		right.add(new Label("Sort by"));
+
+		right.add(new JLabel("Sort by"));
 
 		nameButton = new JRadioButton("Name", true);
 		right.add(nameButton);
@@ -54,10 +46,6 @@ public class Registration extends JFrame {
 		down.add(cBox);
 		cBox.addActionListener(new BoxLis());
 
-		// JButton newButton = new JButton("New");
-		// down.add(newButton);
-		// newButton.addActionListener(new NewLis());
-
 		JButton showButton = new JButton("Show");
 		down.add(showButton);
 		showButton.addActionListener(new ShowLis());
@@ -70,16 +58,14 @@ public class Registration extends JFrame {
 		setSize(600, 500);
 		setVisible(true);
 
-		addDingdong();
-
 	}
 
-	class FormularJewlery extends JPanel {
-		JTextField nameField = new JTextField(10);
-		JTextField jewlsField = new JTextField(3);
-		JCheckBox goldBox = new JCheckBox("Gold");
+	class FormularJewelry extends JPanel {
+		private JTextField nameField = new JTextField(10);
+		private JTextField jewlsField = new JTextField(3);
+		private JCheckBox goldBox = new JCheckBox("Gold");
 
-		public FormularJewlery() {
+		public FormularJewelry() {
 			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 			JPanel line1 = new JPanel();
 			line1.add(new JLabel("Name;"));
@@ -87,7 +73,7 @@ public class Registration extends JFrame {
 			add(line1);
 
 			JPanel line2 = new JPanel();
-			line2.add(new JLabel("Jewls:"));
+			line2.add(new JLabel("Jewels:"));
 			line2.add(jewlsField);
 			add(line2);
 			add(goldBox);
@@ -108,9 +94,9 @@ public class Registration extends JFrame {
 	}
 
 	class FormularStock extends JPanel {
-		JTextField nameField = new JTextField(10);
-		JTextField priceField = new JTextField(5);
-		JTextField amountField = new JTextField(5);
+		private JTextField nameField = new JTextField(10);
+		private JTextField priceField = new JTextField(5);
+		private JTextField amountField = new JTextField(5);
 
 		public FormularStock() {
 			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -142,15 +128,15 @@ public class Registration extends JFrame {
 			return Integer.parseInt(amountField.getText());
 		}
 
-		protected boolean stock(Object stock) {
+		protected boolean stock(AuctionObject stock) {
 			return true;
 		}
 	}
 
 	class FormularElectronics extends JPanel {
-		JTextField nameField = new JTextField(10);
-		JTextField priceField = new JTextField(5);
-		JTextField damageField = new JTextField(2);
+		private JTextField nameField = new JTextField(10);
+		private JTextField priceField = new JTextField(5);
+		private JTextField damageField = new JTextField(2);
 
 		public FormularElectronics() {
 			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -190,14 +176,14 @@ public class Registration extends JFrame {
 			String bSelec = (String) cBox.getSelectedItem();
 			System.out.println(bSelec);
 
-			if (bSelec == "Jewelry") {
+			if (bSelec.equals("Jewelry")) {
 				jewelryCreation();
 				System.out.println("Jewelry created");
-			} else if (bSelec == "Stock") {
+			} else if (bSelec.equals("Stock")) {
 				stockCreation();
 				System.out.println("Stock Created");
 
-			} else if (bSelec == "Electronics") {
+			} else if (bSelec.equals("Electronics")) {
 				electronicsCreation();
 				System.out.println("Electronics created");
 			}
@@ -208,8 +194,12 @@ public class Registration extends JFrame {
 			try {
 				FormularElectronics fe = new FormularElectronics();
 				int answer = JOptionPane.showConfirmDialog(Registration.this, fe, "New", JOptionPane.OK_CANCEL_OPTION);
-
+				
 				if (answer != JOptionPane.OK_OPTION) {
+					return;
+				}
+				if(fe.getName() == null ||fe.getName().equals("")) {
+					JOptionPane.showConfirmDialog(null, "You need to name the object", "ERROR", JOptionPane.OK_OPTION);
 					return;
 				}
 				String name = fe.getName();
@@ -217,7 +207,7 @@ public class Registration extends JFrame {
 				double damage = fe.getDamege();
 
 				Electronics eReg = new Electronics(name, price, damage);
-				allObject.add(eReg);
+				allObjects.add(eReg);
 				System.out.println("eReg");
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(Registration.this, "Wrong inputdata");
@@ -226,7 +216,7 @@ public class Registration extends JFrame {
 
 		public void jewelryCreation() {
 			try {
-				FormularJewlery fj = new FormularJewlery();
+				FormularJewelry fj = new FormularJewelry();
 				int answer = JOptionPane.showConfirmDialog(Registration.this, fj, "New", JOptionPane.OK_CANCEL_OPTION);
 
 				if (answer != JOptionPane.OK_OPTION) {
@@ -237,7 +227,7 @@ public class Registration extends JFrame {
 				boolean goldBox = fj.getGold();
 
 				Jewelry jReg = new Jewelry(name, jewls, goldBox);
-				allObject.add(jReg);
+				allObjects.add(jReg);
 				System.out.println("jREG");
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(Registration.this, "Wrong inputdata");
@@ -258,7 +248,7 @@ public class Registration extends JFrame {
 				int amount = fs.getAmount();
 
 				Stock sReg = new Stock(name, price, amount);
-				allObject.add(sReg);
+				allObjects.add(sReg);
 				System.out.println("sReg");
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(Registration.this, "Wrong inputdata");
@@ -267,42 +257,19 @@ public class Registration extends JFrame {
 
 	}
 
-	// class NewLis implements ActionListener{
-	// public void actionPerformed(ActionEvent ave) {
-	// FormularJewlery fj = new FormularJewlery();
-	// BoxLis boxlis = new BoxLis();
-	//
-	// int answer = JOptionPane.showConfirmDialog(Registration.this, fj, "New",
-	// JOptionPane.OK_CANCEL_OPTION);
-	//
-	//
-	// if (answer != JOptionPane.OK_OPTION) {
-	// return;
-	// }
-	// String name = fj.getName();
-	// int jewls = fj.getJewls();
-	// boolean goldBox = fj.getGold();
-	//
-	// Jewelry jReg = new Jewelry(name, jewls, goldBox);
-	// allObject.add(jReg);
-	// System.out.println("jREG");
-	// }
-	// }
-	// }
-
 	class ShowLis implements ActionListener {
 
 		public void actionPerformed(ActionEvent ave) {
 			display.setText("");
 
 			if (valueButton.isSelected()) {
-				Collections.sort(allObject, new ValueCmp());
-				for (Object obj : allObject) {
+				Collections.sort(allObjects, new ValueCmp());
+				for (AuctionObject obj : allObjects) {
 					display.append(obj.toString() + "\n");
 				}
 			} else {
-				Collections.sort(allObject, new NameCmp());
-				for (Object obj : allObject) {
+				Collections.sort(allObjects, new NameCmp());
+				for (AuctionObject obj : allObjects) {
 					display.append(obj.toString() + "\n");
 				}
 			}
@@ -312,7 +279,7 @@ public class Registration extends JFrame {
 	class BlackMondayLis implements ActionListener {
 
 		public void actionPerformed(ActionEvent ave) {
-			for (Object obj : allObject) {
+			for (AuctionObject obj : allObjects) {
 				if (obj instanceof Stock) {
 					((Stock) obj).blackMonday();
 				}
@@ -324,14 +291,14 @@ public class Registration extends JFrame {
 
 	}
 
-	class NameCmp implements Comparator<Object> {
-		public int compare(Object obj1, Object obj2) {
+	class NameCmp implements Comparator<AuctionObject> {
+		public int compare(AuctionObject obj1, AuctionObject obj2) {
 			return obj1.getName().compareTo(obj2.getName());
 		}
 	}
 
-	class ValueCmp implements Comparator<Object> {
-		public int compare(Object obj1, Object obj2) {
+	class ValueCmp implements Comparator<AuctionObject> {
+		public int compare(AuctionObject obj1, AuctionObject obj2) {
 			return obj2.getValue() - obj1.getValue();
 		}
 	}
