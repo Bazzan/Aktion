@@ -3,7 +3,7 @@ import java.util.Comparator;
 // fixa guld boolen
 
 abstract class AuctionObject {
-
+	public double moms = 1.25;
 	private String name;
 
 	public AuctionObject(String name) {
@@ -41,7 +41,7 @@ class Jewelry extends AuctionObject {
 	@Override
 	public int getValue() {
 		double value = gold ? getJewls() * 500 + 2000 : getJewls() * 500 + 700;
-		return (int)(value * (1.25));
+		return (int)(value * moms);
 	}
 
 	@Override
@@ -81,7 +81,7 @@ class Stock extends AuctionObject {
 	@Override
 	public int getValue() {
 		double value = priceEA * amount;
-		return (int)(value * (1.25));
+		return (int)(value * moms);
 	}
 
 	@Override
@@ -119,7 +119,7 @@ class Electronics extends AuctionObject {
 		System.out.println(damage + "damage");
 		value = (initialPrice * damageCalc);
 		System.out.println(value + "price");
-		return (int) (value * 1.25);
+		return (int) (value * moms);
 
 	}
 

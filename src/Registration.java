@@ -199,7 +199,7 @@ public class Registration extends JFrame {
 					return;
 				}
 				if(fe.getName() == null ||fe.getName().equals("")) {
-					JOptionPane.showConfirmDialog(null, "You need to name the object", "ERROR", JOptionPane.OK_OPTION);
+					JOptionPane.showMessageDialog(null, "You need to name the object", "ERROR", JOptionPane.OK_OPTION);
 					return;
 				}
 				String name = fe.getName();
@@ -220,6 +220,10 @@ public class Registration extends JFrame {
 				int answer = JOptionPane.showConfirmDialog(Registration.this, fj, "New", JOptionPane.OK_CANCEL_OPTION);
 
 				if (answer != JOptionPane.OK_OPTION) {
+					return;
+				}
+				if(fj.getName() == null ||fj.getName().equals("")) {
+					JOptionPane.showMessageDialog(null, "You need to name the object", "ERROR", JOptionPane.OK_OPTION);
 					return;
 				}
 				String name = fj.getName();
@@ -243,6 +247,11 @@ public class Registration extends JFrame {
 				if (answer != JOptionPane.OK_OPTION) {
 					return;
 				}
+				if(fs.getName() == null ||fs.getName().equals("")) {
+					JOptionPane.showMessageDialog(null, "You need to name the object", "ERROR", JOptionPane.OK_OPTION);
+					return;
+				}
+				
 				String name = fs.getName();
 				int price = fs.getPrice();
 				int amount = fs.getAmount();
